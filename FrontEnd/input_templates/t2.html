@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Input Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="../img/icon.png">
+   <style>
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-image: url('https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png');
+    position: relative;
+    background-attachment: fixed;
+  background-size: cover;
+ 
+    width: 100%;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+h2{
+    margin-top: 0;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+#head{
+    margin-top: 20px;
+    margin-left: 90px;
+    margin-right: 90px;
+    margin-bottom: -20px;
+    text-align: center;
+    padding: 0px;
+}
+label{
+    font-size: 15px;
+}
+h2{
+    font-family: bookman old style;
+    
+    font-weight: normal;
+    font-size: 20px;
+}
+h3{
+    font-family: bookman old style;
+  
+    font-weight: normal;
+    font-size: 20px;
+}
+
+th{
+    font-size: 15px;
+    font-family: bookman old style;
+    text-decoration: none;
+    font-weight: normal;
+    text-align: center;
+}
+td{
+    font-size: 10px;
+    font-family: bookman old style;
+    text-decoration: none;
+    font-weight: normal;
+    text-align: center;
+}
+
+   </style>
+</head>
+<body>
+    <iframe src="../header2.html" width="100%" height="100" frameborder="0" scrolling="no"></iframe>
+    <h2 class=" text-white p-3 rounded" id="head" style="background-color: #7a2020;">Department of Computer Science & Engineering</h2>
+
+    
+    <div class="container mt-5">
+
+        <!-- Prompt for data entry method -->
+<section class="mb-4 border rounded p-4 bg-light">
+    <h3 class=" text-white p-3 rounded"style="background-color: #7a2020;" >Data Entry Method</h3>
+    <div class="form-check">
+        <input type="radio" class="form-check-input" name="dataEntryMethod" id="manualEntry">
+        <label class="form-check-label" for="manualEntry">Enter Data Manually</label>
+    </div>
+    <div class="form-check">
+        <input type="radio" class="form-check-input" name="dataEntryMethod" id="csvImport">
+        <label class="form-check-label" for="csvImport">Import from CSV</label>
+    </div>
+</section>
+
+<!-- Container for manual data entry (initially hidden) -->
+<div id="manualDataEntrySection" class="d-none">
+    <h2 class=" text-white p-3 rounded" style="background-color: #7a2020;">Manual Data Entry</h2>
+    <form>
+        <!-- Enrollment Details Section -->
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class=" text-white p-3 rounded" style="background-color: #7a2020;">Enrollment & Academic Details</h2>
+            
+            <!-- Table for Enrollment and Passout -->
+            <div class="table-responsive">
+                <table class="table table-bordered" id="enrollment-table">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th scope="col">Class</th>
+                            <th scope="col">Number of Students Enrolled</th>
+                            <th scope="col">Number of Students Passed Out</th>
+                            <th scope="col">Number of Students Got Scholarship</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Initial Row 1 -->
+                        <tr id="row-1">
+                            <td>
+                                <select class="form-select" name="class-1">
+                                    <option value="FY">FY</option>
+                                    <option value="SY">SY</option>
+                                    <option value="TY">TY</option>
+                                    <option value="BTECH">BTECH</option>
+                                </select>
+                            </td>
+                            <td><input type="number" class="form-control" name="enrolled-1"></td>
+                            <td><input type="number" class="form-control" name="passed-out-1"></td>
+                            <td><input type="number" class="form-control" name="scholarship-1"></td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- Add More Entry Button -->
+                <button type="button" class="btn btn-success" id="add-enrollment-entry-btn">Add More Entry</button>
+                <button type="submit" class="btn btn-primary ">Submit</button>
+                <button type="button" class="btn btn-secondary " id="cancel-btn">Cancel</button>
+            </div>
+        </section>
+        
+        <script>
+            let enrollmentEntryCount = 1; // Keep track of how many rows have been added for enrollment
+        
+            // Function to add a new row for enrollment details
+            document.getElementById('add-enrollment-entry-btn').addEventListener('click', function() {
+                enrollmentEntryCount++; // Increment row count
+        
+                // Create a new row
+                const newRow = document.createElement('tr');
+                newRow.id = `row-${enrollmentEntryCount}`;
+                newRow.innerHTML = `
+                    <td>
+                        <select class="form-select" name="class-${enrollmentEntryCount}">
+                            <option value="FY">FY</option>
+                            <option value="SY">SY</option>
+                            <option value="TY">TY</option>
+                            <option value="BTECH">BTECH</option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="form-control" name="enrolled-${enrollmentEntryCount}"></td>
+                    <td><input type="number" class="form-control" name="passed-out-${enrollmentEntryCount}"></td>
+                    <td><input type="number" class="form-control" name="scholarship-${enrollmentEntryCount}"></td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow('row-${enrollmentEntryCount}')">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </td>
+                `;
+        
+                // Append the new row to the table body
+                document.querySelector('#enrollment-table tbody').appendChild(newRow);
+            });
+        
+            // Function to remove a row
+            function removeRow(rowId) {
+                const row = document.getElementById(rowId);
+                row.parentNode.removeChild(row);
+            }
+        
+            // Function to handle cancel button click
+            document.getElementById('cancel-btn').addEventListener('click', function() {
+                // Optionally reset the form or redirect
+                if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
+                    // Logic to reset or redirect
+                    // Example: window.location.href = 'your-redirect-url.html';
+                    document.querySelector('#enrollment-table tbody').innerHTML = `
+                        <tr id="row-1">
+                            <td>
+                                <select class="form-select" name="class-1">
+                                    <option value="FY">FY</option>
+                                    <option value="SY">SY</option>
+                                    <option value="TY">TY</option>
+                                    <option value="BTECH">BTECH</option>
+                                </select>
+                            </td>
+                            <td><input type="number" class="form-control" name="enrolled-1"></td>
+                            <td><input type="number" class="form-control" name="passed-out-1"></td>
+                            <td><input type="number" class="form-control" name="scholarship-1"></td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    enrollmentEntryCount = 1; // Reset row count
+                }
+            });
+        </script>
+        
+        <!-- Make sure to include Font Awesome for the icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+            <!-- Academic Section -->
+            <section class="mb-4 border rounded p-4 bg-light">
+                <h3 class=" text-white p-3 rounded mt-4" style="background-color: #7a2020;">Academic</h3>
+                <form>
+                    <div class="table-responsive mb-3">
+                        <table class="table table-bordered" id="academic-table">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Name of Student</th>
+                                    <th>Rank</th>
+                                    <th>Year</th>
+                                    <th>Marks</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Initial Row 1 -->
+                                <tr id="row-1">
+                                    <td><input type="text" class="form-control" name="student-name-1" placeholder="Enter student name"></td>
+                                    <td>
+                                        <select class="form-select" name="student-rank-1">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-select" name="student-year-1">
+                                            <option value="FY">FY</option>
+                                            <option value="SY">SY</option>
+                                            <option value="TY">TY</option>
+                                            <option value="BTECH">BTECH</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" class="form-control" name="student-marks-1" placeholder="Enter marks"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                            <i class="fas fa-trash-alt"></i> Remove
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Add More Entry Button -->
+                    <button type="button" class="btn btn-success" id="add-academic-entry-btn">Add More Entry</button>
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                </form>
+            </section>
+            
+            <script>
+                let placementEntryCount = 1; // Keep track of how many rows have been added for academic
+            
+                // Function to add a new row for academic details
+                document.getElementById('add-academic-entry-btn').addEventListener('click', function() {
+                    academicEntryCount++; // Increment row count
+            
+                    // Create a new row
+                    const newRow = document.createElement('tr');
+                    newRow.id = `row-${placementEntryCount}`;
+                    newRow.innerHTML = `
+                        <td><input type="text" class="form-control" name="student-name-${placementEntryCount}" placeholder="Enter student name"></td>
+                        <td>
+                            <select class="form-select" name="student-rank-${placementEntryCount}">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="student-year-${placementEntryCount}">
+                                <option value="FY">FY</option>
+                                <option value="SY">SY</option>
+                                <option value="TY">TY</option>
+                                <option value="BTECH">BTECH</option>
+                            </select>
+                        </td>
+                        <td><input type="number" class="form-control" name="student-marks-${academicEntryCount}" placeholder="Enter marks"></td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow('row-${academicEntryCount}')">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </button>
+                        </td>
+                    `;
+            
+                    // Append the new row to the table body
+                    document.querySelector('#academic-table tbody').appendChild(newRow);
+                });
+            
+                // Function to remove a row
+                function removeRow(rowId) {
+                    const row = document.getElementById(rowId);
+                    row.parentNode.removeChild(row);
+                }
+            
+                // Function to handle cancel button click
+                document.getElementById('cancel-btn').addEventListener('click', function() {
+                    // Optionally reset the form or redirect
+                    if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
+                        // Logic to reset or redirect
+                        // Example: window.location.href = 'your-redirect-url.html';
+                        document.querySelector('#academic-table tbody').innerHTML = `
+                            <tr id="row-1">
+                                <td><input type="text" class="form-control" name="student-name-1" placeholder="Enter student name"></td>
+                                <td>
+                                    <select class="form-select" name="student-rank-1">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-select" name="student-year-1">
+                                        <option value="FY">FY</option>
+                                        <option value="SY">SY</option>
+                                        <option value="TY">TY</option>
+                                        <option value="BTECH">BTECH</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" class="form-control" name="student-marks-1" placeholder="Enter marks"></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                        <i class="fas fa-trash-alt"></i> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                        academicEntryCount = 1; // Reset row count
+                    }
+                });
+            </script>
+            
+            <!-- Make sure to include Font Awesome for the icons -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+            
+        <!-- Academic Section -->
+        <!-- <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Academic</h2>
+            <div class="mb-3">
+                <label for="top-students" class="form-label">Top 5 Students (FY, SY, TY, BTECH)</label>
+                <input type="text" class="form-control" id="top-students" name="top-students">
+            </div>
+            <div class="mb-3">
+                <label for="placements" class="form-label">Placements/Internship</label>
+                <input type="text" class="form-control" id="placements" name="placements">
+            </div>
+            <div class="mb-3">
+                <label for="events" class="form-label">Events</label>
+                <input type="text" class="form-control" id="events" name="events">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section> -->
+
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Students Achievements 2023-24</h2>
+            <div class="table-responsive mb-3">
+                <table class="table table-bordered" id="achievement-table">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Name of Student</th>
+                            <th>Year</th>
+                            <th>Achievement Type</th>
+                            <th>Details</th>
+                            <th>Upload File</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Initial Row 1 -->
+                        <tr id="row-1">
+                            <td><input type="text" class="form-control" name="student-name-1" placeholder="Enter student name"></td>
+                            <td>
+                                <select class="form-select" name="student-year-1">
+                                    <option value="FY">FY</option>
+                                    <option value="SY">SY</option>
+                                    <option value="TY">TY</option>
+                                    <option value="BTECH">BTECH</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" name="achievement-type-1">
+                                    <option value="Award">Award</option>
+                                    <option value="Publication">Publication</option>
+                                    <option value="Patent">Patent</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control" name="achievement-details-1" placeholder="Enter achievement details"></td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('achievement-file-1').click();">
+                                    <i class="fas fa-file-upload"></i> Upload
+                                </button>
+                                <span id="achievement-file-name-1" class="ms-2"></span>
+                                <input type="file" class="d-none" id="achievement-file-1" name="achievement-file-1" onchange="showFileName('achievement-file-1', 'achievement-file-name-1')">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Add More Entry Button -->
+            <button type="button" class="btn btn-success " id="add-entry-btn">Add More Entry</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section>
+        
+        <script>
+            let entryCount = 1; // Keep track of how many rows have been added
+        
+            // Function to add a new row
+            document.getElementById('add-entry-btn').addEventListener('click', function() {
+                entryCount++; // Increment row count
+        
+                // Create a new row
+                const newRow = document.createElement('tr');
+                newRow.id = `row-${entryCount}`;
+                newRow.innerHTML = `
+                    <td><input type="text" class="form-control" name="student-name-${entryCount}" placeholder="Enter student name"></td>
+                    <td>
+                        <select class="form-select" name="student-year-${entryCount}">
+                            <option value="FY">FY</option>
+                            <option value="SY">SY</option>
+                            <option value="TY">TY</option>
+                            <option value="BTECH">BTECH</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" name="achievement-type-${entryCount}">
+                            <option value="Award">Award</option>
+                            <option value="Publication">Publication</option>
+                            <option value="Patent">Patent</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="form-control" name="achievement-details-${entryCount}" placeholder="Enter achievement details"></td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('achievement-file-${entryCount}').click();">
+                            <i class="fas fa-file-upload"></i> Upload
+                        </button>
+                        <span id="achievement-file-name-${entryCount}" class="ms-2"></span>
+                        <input type="file" class="d-none" id="achievement-file-${entryCount}" name="achievement-file-${entryCount}" onchange="showFileName('achievement-file-${entryCount}', 'achievement-file-name-${entryCount}')">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow('row-${entryCount}')">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </td>
+                `;
+        
+                // Append the new row to the table body
+                document.querySelector('#achievement-table tbody').appendChild(newRow);
+            });
+        
+            // Function to show file name when a file is selected
+            function showFileName(inputId, displayId) {
+                const inputElement = document.getElementById(inputId);
+                const displayElement = document.getElementById(displayId);
+                const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "No file chosen";
+                displayElement.textContent = fileName;
+            }
+        
+            // Function to remove a row
+            function removeRow(rowId) {
+                const row = document.getElementById(rowId);
+                row.parentNode.removeChild(row);
+            }
+        </script>
+
+
+
+
+
+
+
+
+
+
+<section class="mb-4 border rounded p-4 bg-light">
+    <h3 class=" text-white p-3 rounded mt-4" style="background-color: #7a2020;">Placements</h3>
+    <form>
+        <div class="table-responsive mb-3">
+            <table class="table table-bordered" id="academic-table">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Name of Student</th>
+                        <th>Duration</th>
+                        <th>Mode</th>
+                        <th>Internship/Placement</th>
+                        <th>Paid/Unpaid</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Initial Row 1 -->
+                    <tr id="row-1">
+                        <td><input type="text" class="form-control" name="student-name-1" placeholder="Enter student name"></td>
+                        <td>
+                            <select class="form-select" name="student-rank-1">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-select" name="student-year-1">
+                                <option value="FY">FY</option>
+                                <option value="SY">SY</option>
+                                <option value="TY">TY</option>
+                                <option value="BTECH">BTECH</option>
+                            </select>
+                        </td>
+
+                        <td>
+                            <select class="form-select" name="student-year-1">
+                                <option value="FY">FY</option>
+                                <option value="SY">SY</option>
+                                <option value="TY">TY</option>
+                                <option value="BTECH">BTECH</option>
+                            </select>
+                        </td>
+                        <td><input type="number" class="form-control" name="student-marks-1" placeholder="Enter marks"></td>
+                        <td>
+                            <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Add More Entry Button -->
+        <button type="button" class="btn btn-success" id="add-academic-entry-btn">Add More Entry</button>
+        <button type="submit" class="btn btn-primary ">Submit</button>
+        <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+    </form>
+</section>
+
+<script>
+    let academicEntryCount = 1; // Keep track of how many rows have been added for academic
+
+    // Function to add a new row for academic details
+    document.getElementById('add-academic-entry-btn').addEventListener('click', function() {
+        academicEntryCount++; // Increment row count
+
+        // Create a new row
+        const newRow = document.createElement('tr');
+        newRow.id = `row-${academicEntryCount}`;
+        newRow.innerHTML = `
+            <td><input type="text" class="form-control" name="student-name-${academicEntryCount}" placeholder="Enter student name"></td>
+            <td>
+                <select class="form-select" name="student-rank-${academicEntryCount}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </td>
+            <td>
+                <select class="form-select" name="student-year-${academicEntryCount}">
+                    <option value="FY">FY</option>
+                    <option value="SY">SY</option>
+                    <option value="TY">TY</option>
+                    <option value="BTECH">BTECH</option>
+                </select>
+            </td>
+            <td><input type="number" class="form-control" name="student-marks-${academicEntryCount}" placeholder="Enter marks"></td>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="removeRow('row-${academicEntryCount}')">
+                    <i class="fas fa-trash-alt"></i> Remove
+                </button>
+            </td>
+        `;
+
+        // Append the new row to the table body
+        document.querySelector('#academic-table tbody').appendChild(newRow);
+    });
+
+    // Function to remove a row
+    function removeRow(rowId) {
+        const row = document.getElementById(rowId);
+        row.parentNode.removeChild(row);
+    }
+
+    // Function to handle cancel button click
+    document.getElementById('cancel-btn').addEventListener('click', function() {
+        // Optionally reset the form or redirect
+        if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
+            // Logic to reset or redirect
+            // Example: window.location.href = 'your-redirect-url.html';
+            document.querySelector('#academic-table tbody').innerHTML = `
+                <tr id="row-1">
+                    <td><input type="text" class="form-control" name="student-name-1" placeholder="Enter student name"></td>
+                    <td>
+                        <select class="form-select" name="student-rank-1">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" name="student-year-1">
+                            <option value="FY">FY</option>
+                            <option value="SY">SY</option>
+                            <option value="TY">TY</option>
+                            <option value="BTECH">BTECH</option>
+                        </select>
+                    </td>
+                    <td><input type="number" class="form-control" name="student-marks-1" placeholder="Enter marks"></td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </td>
+                </tr>
+            `;
+            academicEntryCount = 1; // Reset row count
+        }
+    });
+</script>
+
+        
+        <!-- Make sure to include Font Awesome for the icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+        <!-- Students Achievements Section 
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Students Achievements 2023-24</h2>
+            <div class="mb-3">
+                <label for="awards" class="form-label">Awards</label>
+                <input type="text" class="form-control" id="awards" name="awards">
+            </div>
+            <div class="mb-3">
+                <label for="publications" class="form-label">Paper Publication</label>
+                <input type="text" class="form-control" id="publications" name="publications">
+            </div>
+            <div class="mb-3">
+                <label for="patents" class="form-label">Patent</label>
+                <input type="text" class="form-control" id="patents" name="patents">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section>-->
+
+
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Faculty Achievements 2023-24</h2>
+            <div class="table-responsive mb-3">
+                <table class="table table-bordered" id="faculty-achievement-table">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Faculty Name</th>
+                            <th>Designation</th>
+                            <th>Achievement Type</th>
+                            <th>Details</th>
+                            <th>Upload File</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Initial Row 1 -->
+                        <tr id="row-1">
+                            <td><input type="text" class="form-control" name="faculty-name-1" placeholder="Enter faculty name"></td>
+                            <td>
+                                <select class="form-select" name="designation-1">
+                                    <option value="Assistant Professor">Assistant Professor</option>
+                                    <option value="HOD">HOD</option>
+                                    <option value="DEAN">DEAN</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" name="achievement-type-1">
+                                    <option value="Award">Award</option>
+                                    <option value="Publication">Publication</option>
+                                    <option value="Patent">Patent</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control" name="achievement-details-1" placeholder="Enter achievement details"></td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('faculty-file-1').click();">
+                                    <i class="fas fa-file-upload"></i> Upload
+                                </button>
+                                <span id="faculty-file-name-1" class="ms-2"></span>
+                                <input type="file" class="d-none" id="faculty-file-1" name="faculty-file-1" onchange="showFileName('faculty-file-1', 'faculty-file-name-1')">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Add More Entry Button -->
+            <button type="button" class="btn btn-success" id="add-faculty-entry-btn">Add More Entry</button>
+            <button type="submit" class="btn btn-primary ">Submit</button>
+        </section>
+        
+        <script>
+            let facultyEntryCount = 1; // Keep track of how many rows have been added for faculty
+        
+            // Function to add a new row for faculty achievements
+            document.getElementById('add-faculty-entry-btn').addEventListener('click', function() {
+                facultyEntryCount++; // Increment row count
+        
+                // Create a new row
+                const newRow = document.createElement('tr');
+                newRow.id = `row-${facultyEntryCount}`;
+                newRow.innerHTML = `
+                    <td><input type="text" class="form-control" name="faculty-name-${facultyEntryCount}" placeholder="Enter faculty name"></td>
+                    <td>
+                        <select class="form-select" name="designation-${facultyEntryCount}">
+                            <option value="Assistant Professor">Assistant Professor</option>
+                            <option value="HOD">HOD</option>
+                            <option value="DEAN">DEAN</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" name="achievement-type-${facultyEntryCount}">
+                            <option value="Award">Award</option>
+                            <option value="Publication">Publication</option>
+                            <option value="Patent">Patent</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="form-control" name="achievement-details-${facultyEntryCount}" placeholder="Enter achievement details"></td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('faculty-file-${facultyEntryCount}').click();">
+                            <i class="fas fa-file-upload"></i> Upload
+                        </button>
+                        <span id="faculty-file-name-${facultyEntryCount}" class="ms-2"></span>
+                        <input type="file" class="d-none" id="faculty-file-${facultyEntryCount}" name="faculty-file-${facultyEntryCount}" onchange="showFileName('faculty-file-${facultyEntryCount}', 'faculty-file-name-${facultyEntryCount}')">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow('row-${facultyEntryCount}')">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </td>
+                `;
+        
+                // Append the new row to the table body
+                document.querySelector('#faculty-achievement-table tbody').appendChild(newRow);
+            });
+        
+            // Function to show file name when a file is selected
+            function showFileName(inputId, displayId) {
+                const inputElement = document.getElementById(inputId);
+                const displayElement = document.getElementById(displayId);
+                const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "No file chosen";
+                displayElement.textContent = fileName;
+            }
+        
+            // Function to remove a row
+            function removeRow(rowId) {
+                const row = document.getElementById(rowId);
+                row.parentNode.removeChild(row);
+            }
+        </script>
+        
+        <!-- Make sure to include Font Awesome for the icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+        <!-- Faculty Achievements Section 
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Faculty Achievements 2023-24</h2>
+            <div class="mb-3">
+                <label for="faculty-awards" class="form-label">Awards</label>
+                <input type="text" class="form-control" id="faculty-awards" name="faculty-awards">
+            </div>
+            <div class="mb-3">
+                <label for="faculty-publications" class="form-label">Paper Publication</label>
+                <input type="text" class="form-control" id="faculty-publications" name="faculty-publications">
+            </div>
+            <div class="mb-3">
+                <label for="faculty-patents" class="form-label">Patent</label>
+                <input type="text" class="form-control" id="faculty-patents" name="faculty-patents">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section>-->
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Sports</h2>
+            <div class="table-responsive mb-3">
+                <table class="table table-bordered" id="sports-table">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Department</th>
+                            <th>Competition Level</th>
+                            <th>Rank</th>
+                            <th>Upload Certificate</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Initial Row 1 -->
+                        <tr id="row-1">
+                            <td><input type="text" class="form-control" name="department-1" placeholder="Enter department"></td>
+                            <td>
+                                <select class="form-select" name="competition-level-1">
+                                    <option value="Inter">Inter</option>
+                                    <option value="National">National</option>
+                                    <option value="Zonal">Zonal</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="form-control" name="rank-1" placeholder="Enter rank"></td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" onclick="document.getElementById('certificate-file-1').click();">
+                                    <i class="fas fa-file-upload"></i> Upload
+                                </button>
+                                <span id="certificate-file-name-1" class="ms-2"></span>
+                                <input type="file" class="d-none" id="certificate-file-1" name="certificate-file-1" onchange="showFileName('certificate-file-1', 'certificate-file-name-1')">
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" onclick="removeRow('row-1')">
+                                    <i class="fas fa-trash-alt"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Add More Entry Button -->
+            <button type="button" class="btn btn-success" id="add-sports-entry-btn">Add More Entry</button>
+            <button type="submit" class="btn btn-primary ">Submit</button>
+        </section>
+        
+        <script>
+            let sportsEntryCount = 1; // Keep track of how many rows have been added for sports
+        
+            // Function to add a new row for sports achievements
+            document.getElementById('add-sports-entry-btn').addEventListener('click', function() {
+                sportsEntryCount++; // Increment row count
+        
+                // Create a new row
+                const newRow = document.createElement('tr');
+                newRow.id = `row-${sportsEntryCount}`;
+                newRow.innerHTML = `
+                    <td><input type="text" class="form-control" name="department-${sportsEntryCount}" placeholder="Enter department"></td>
+                    <td>
+                        <select class="form-select" name="competition-level-${sportsEntryCount}">
+                            <option value="Inter">Inter</option>
+                            <option value="National">National</option>
+                            <option value="Zonal">Zonal</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="form-control" name="rank-${sportsEntryCount}" placeholder="Enter rank"></td>
+                    <td>
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('certificate-file-${sportsEntryCount}').click();">
+                            <i class="fas fa-file-upload"></i> Upload
+                        </button>
+                        <span id="certificate-file-name-${sportsEntryCount}" class="ms-2"></span>
+                        <input type="file" class="d-none" id="certificate-file-${sportsEntryCount}" name="certificate-file-${sportsEntryCount}" onchange="showFileName('certificate-file-${sportsEntryCount}', 'certificate-file-name-${sportsEntryCount}')">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="removeRow('row-${sportsEntryCount}')">
+                            <i class="fas fa-trash-alt"></i> Remove
+                        </button>
+                    </td>
+                `;
+        
+                // Append the new row to the table body
+                document.querySelector('#sports-table tbody').appendChild(newRow);
+            });
+        
+            // Function to show file name when a file is selected
+            function showFileName(inputId, displayId) {
+                const inputElement = document.getElementById(inputId);
+                const displayElement = document.getElementById(displayId);
+                const fileName = inputElement.files.length > 0 ? inputElement.files[0].name : "No file chosen";
+                displayElement.textContent = fileName;
+            }
+        
+            // Function to remove a row
+            function removeRow(rowId) {
+                const row = document.getElementById(rowId);
+                row.parentNode.removeChild(row);
+            }
+        </script>
+        
+        <!-- Make sure to include Font Awesome for the icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+        <!-- Sports Section 
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Sports</h2>
+            <div class="mb-3">
+                <label for="trophies" class="form-label">Trophies and Cups won by the College</label>
+                <input type="text" class="form-control" id="trophies" name="trophies">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section>-->
+
+        <!-- Cultural Section -->
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Cultural</h2>
+            <div class="mb-3">
+                <label for="cultural-activities" class="form-label">Cultural Activity conducted by the department</label>
+                <input type="text" class="form-control" id="cultural-activities" name="cultural-activities">
+            </div>
+            <div class="mb-3">
+                <label for="student-participation" class="form-label">Student participation in cultural activity in inner college/zonal</label>
+                <input type="text" class="form-control" id="student-participation" name="student-participation">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section>
+
+        <!-- Extra Curricular Activities Section -->
+        <section class="mb-4 border rounded p-4 bg-light">
+            <h2 class="bg-primary text-white p-3 rounded">Extra Curricular Activities</h2>
+            <div class="mb-3">
+                <label for="collaborations" class="form-label">Collaborations</label>
+                <input type="text" class="form-control" id="collaborations" name="collaborations">
+            </div>
+            <div class="mb-3">
+                <label for="nss" class="form-label">NSS</label>
+                <input type="text" class="form-control" id="nss" name="nss">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </section>
+
+        <div class="container mt-5">
+            <section class="mb-4 border rounded p-4 bg-light d-flex flex-column align-items-center justify-content-center" >
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="confirm-check" required>
+                    <label class="form-check-label" for="confirm-check">I am sure that the above content is correct.</label>
+                </div>
+                <button type="submit" class="btn btn-primary " id="final-submit-btn" disabled style="padding-left: 50px;padding-right: 50px;">Submit</button>
+            </section>
+            </div>
+    </form>
+</div>
+
+
+<script>
+    // Enable the final submit button only when the checkbox is checked
+    document.getElementById('confirm-check').addEventListener('change', function() {
+        document.getElementById('final-submit-btn').disabled = !this.checked;
+    });
+</script>
+
+</div>  
+</div>
+
+<!-- CSV import section (initially hidden) -->
+
+<div id="csvImportSection" class="d-none">
+     
+<div class="container mt-5">
+    <section class="mb-4 border rounded p-4 bg-light  align-items-center justify-content-center" >
+    <h2 class="bg-primary text-white p-3 rounded">Import Data from CSV</h2>
+    <div class="mb-3">
+        <label for="csvFile" class="form-label">Upload CSV File</label>
+        <input type="file" class="form-control" id="csvFile" name="csvFile" accept=".csv">
+    </div>
+    <button type="button" class="btn btn-primary" onclick="processCSV()">Import</button>
+</div>
+</div>
+
+<script>
+    // Get references to HTML elements
+    const manualEntryRadio = document.getElementById('manualEntry');
+    const csvImportRadio = document.getElementById('csvImport');
+    const manualSection = document.getElementById('manualDataEntrySection');
+    const csvSection = document.getElementById('csvImportSection');
+    
+    // Initially hide the form sections until an option is chosen
+    manualSection.classList.add('d-none');
+    csvSection.classList.add('d-none');
+    
+    // Show/hide sections based on user selection
+    manualEntryRadio.addEventListener('change', function() {
+        if (manualEntryRadio.checked) {
+            manualSection.classList.remove('d-none');
+            csvSection.classList.add('d-none');
+        }
+    });
+
+    csvImportRadio.addEventListener('change', function() {
+        if (csvImportRadio.checked) {
+            manualSection.classList.add('d-none');
+            csvSection.classList.remove('d-none');
+        }
+    });
+
+    // Function to handle CSV file selection and validation
+    function processCSV() {
+        const fileInput = document.getElementById('csvFile');
+        const file = fileInput.files[0];
+        
+        if (file) {
+            // Check if the file is a CSV
+            const fileType = file.type;
+            if (fileType !== 'text/csv') {
+                alert("Please upload a valid CSV file.");
+                fileInput.value = ''; // Clear the file input
+                return;
+            }
+
+            // Handle the CSV file (e.g., read and process)
+            alert("CSV file uploaded: " + file.name);
+            // Add further CSV processing logic here
+        } else {
+            alert("Please select a CSV file.");
+        }
+    }
+</script>
+
+           <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+</body>
+</html>

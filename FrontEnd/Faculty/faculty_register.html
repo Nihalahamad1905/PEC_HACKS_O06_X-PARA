@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Registration Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="../img/icon.png">
+  <style>
+    .card-header {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+    .faculty-img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto; /* Ensures the image is centered horizontally within the left side */
+    }
+    .form-group {
+      display: flex;
+      align-items: center; /* Centers the image vertically within its column */
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+    <iframe src="../header.html" width="100%" height="100" frameborder="0" scrolling="no"></iframe>
+  <div class="container ">
+    <div class="card">
+      <div class="card-header text-center">
+        FACULTY REGISTRATION FORM
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="row mb-3">
+            <!-- Faculty Image Upload -->
+            <div class="col-md-3  ">
+              <div class="form-group">
+                <div class="text-center">
+                  <label for="facultyImage" class="form-label">Upload Image</label>
+                  <img src="../image/demo.jpg" alt="Faculty Image" id="facultyImagePreview" class="faculty-img">
+                  <input type="file" class="form-control mt-3" id="facultyImage" accept="image/*" onchange="previewImage(event)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Faculty Information -->
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="facultyName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="facultyName" placeholder="Enter full name" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="facultyDesignation" class="form-label">Designation</label>
+                  <input type="text" class="form-control" id="facultyDesignation" placeholder="Enter designation" required>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="facultyDob" class="form-label">Date of Birth</label>
+                  <input type="date" class="form-control" id="facultyDob" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="facultyDepartment" class="form-label">Department</label>
+                  <select class="form-select" id="facultyDepartment" required>
+                    <option value="" disabled selected>Select department</option>
+                    <option value="CSE">CSE</option>
+                    <option value="MECH">MECH</option>
+                    <option value="ELE">ELE</option>
+                    <option value="CIVIL">CIVIL</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="facultyAddress" class="form-label">Address</label>
+                <textarea class="form-control" id="facultyAddress" rows="3" placeholder="Enter address" required></textarea>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="facultyDoj" class="form-label">Date of Joining</label>
+                  <input type="date" class="form-control" id="facultyDoj" required>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+              Register Faculty <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Script for Image Preview -->
+  <script>
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function(){
+        const output = document.getElementById('facultyImagePreview');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  </script>
+</body>
+</html>
